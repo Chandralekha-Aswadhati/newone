@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Doremon Gadget</h1>
+    <input type="text" id="city" placeholder="Which power you want">
+    <button id="fetchWeather">Gadget</button>
+    <div id="weatherData"></div>
+    <script>
+
+const apiKey="62164bb7a82f6e";
+const apiUrl="https://ipinfo.io/json";
+
+async function fetchWeather(city) {
+    
+
+    try{
+        const fullUrl=`${apiUrl}?key=${apiKey}&q=${encodeURIComponent(city)}`;
+        const response = await fetch(fullUrl);
+        if(!response.ok){
+            throw new Error(`Error:${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        document.getElementById("weatherData").innerHTML=`
+        <h2> ${data.loc}</h2>
+         <h2>${data.region}</h2>
+        <h2>${data.country}</h2>
+         <h2>${data.postal}</h2>
+         <h2>${data.org}</h2>
+         `;
+    }catch(error) {
+        console.error("failed to fetch weather data:",error);
+    }
+}
+
+document.getElementById('fetchWeather').addEventListener('click',()=>{
+    const city = document.getElementById('city').value;
+    fetchWeather(city);
+});
+    </script>
+</body>
+</html>
+
+
+
+let reverse=0;
+let remainder;
+let original;
+let n=parseInt(prompt("enter your string"));
+original=n;
+while(n!=0){
+    remainder=n%10;
+    reverse=reverse*10+remainder
+    n=Math.floor(n/10)
+}
+if(original==reverse){
+    console.log("palindrome");
+}
+else{
+    console.log("not a palindrome");
+}
